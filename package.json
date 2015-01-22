@@ -1,6 +1,6 @@
 {
   "name": "opc",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Open Pixel Control protocol",
   "main": "index.js",
   "scripts": {
