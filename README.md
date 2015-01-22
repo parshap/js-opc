@@ -1,3 +1,27 @@
+## Stream
+
+```
+var createStream = require("opc");
+```
+
+### `var stream = createStream()`
+
+Creates a stream that emits Open Pixel Control protocol messages.
+
+### `stream.writePixels(channel, pixels)`
+
+Emits a *[set pixel colors][opc set]* command message with the color
+data in the *pixels* buffer.
+
+[opc set]: https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_opc.md#set-pixel-colors
+
+### `stream.writeColorCorrection(config)`
+
+Emits a [Fadecandy *set global color correction*][fc color] command
+message with the given *config* object.
+
+[fc color]: https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_opc.md#set-global-color-correction
+
 ## Strand
 
 ```
