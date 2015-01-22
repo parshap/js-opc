@@ -1,3 +1,42 @@
+# Open Pixel Control
+
+Control lights using the [Open Pixel Control][opc] protocol.
+
+This module was created to control [Fadecandy][] devices, but it should
+work as a generic tool to create Open Pixel Control messages.
+
+[fadecandy]: https://github.com/scanlime/fadecandy
+[opc]: http://openpixelcontrol.org/
+
+## Usage
+
+```js
+// Create TCP connection to Open Pixel Control server
+var Socket = require("net").Socket;
+var socket = new Socket();
+socket.setNoDelay();
+socket.connect(7890);
+
+// Create an Open Pixel Control stream and pipe it to the server
+var createOPCStream = require("opc");
+var stream = createOPCStream();
+stream.pipe(socket);
+
+// Create a strand representing connected lights
+var createStrand = require("opc/strand");
+var strand = createStrand(512); // Fadecandy has 512 addresses
+var left = strand.slice(0, 64); // Fadecandy pin 0
+var right = strand.slice(64, 128); // Fadecand pin 1
+// Set all left pixels to red and right to blue
+for (var i = 0; i < 64; i++) {
+  left.setPixel(i, 255, 0, 0);
+  right.setPixel(i, 0, 0, 255);
+}
+
+// Write the pixel colors to the device on channel 0
+stream.writePixels(0, strand.buffer);
+```
+
 ## Stream
 
 ```
@@ -57,3 +96,9 @@ buffer will be `strand.length * 3` bytes.
 ### `strand.length`
 
 The number of pixels in the strand.
+
+## Installation
+
+```
+npm install opc
+```
