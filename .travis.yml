@@ -4,3 +4,11 @@ node_js:
 - '0.11'
 before_install:
 - npm install -g npm
+script: "npm test && npm run test-browser-sauce"
+addons:
+  sauce_connect: true
+env:
+  global:
+  # Sauce Labs
+  - secure: JhPSTL1BydtnQSiBNCEIdX7Ex1YMCBGPctAPyPZw1b249A/SQMceuofNz9+JDwXxNXaoxP4cK0t3yAu6zWeQe8a6GpoT7pnOC0ODG5o5M0LOsJa6K1s2kPT7+z6uTwt9e4qFOyCLfGpASID4SquvnlOWaeriVfdcTGrPTjb2oZI=
+  - secure: Sctvn2AgQ5ZCUTqM8qijl0x2tjbhrfjrMpNh2I0CiTvsKXpao2EgWHQjXm/glNovy040522r4L4kfKRE/7Eg/opBePH8vU4nBQc8lyMWarauLtiURxGdiJYDoyrbI8Sp2u9Fe/CleiCvQLAHWTsM2rCWYcKylcU3axvmI3AW108=
