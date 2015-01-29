@@ -1,5 +1,7 @@
 # Open Pixel Control
 
+[![build status](https://secure.travis-ci.org/parshap/js-opc.svg?branch=master)](http://travis-ci.org/parshap/js-opc)
+
 Control lights using the [Open Pixel Control][opc] protocol.
 
 This module was created to control [Fadecandy][] devices, but it should
