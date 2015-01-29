@@ -39,7 +39,7 @@ stream.writePixels(0, strand.buffer);
 
 ## Stream
 
-```
+```js
 var createStream = require("opc");
 ```
 
@@ -70,7 +70,7 @@ be a buffer.
 
 ## Strand
 
-```
+```js
 var createStrand = require("opc/strand");
 ```
 
@@ -106,7 +106,7 @@ The number of pixels in the strand.
 
 ## Parser
 
-```
+```js
 var createParser = require("opc/parser");
 
 require("net").createServer(function(connection) {
@@ -132,6 +132,6 @@ properties:
 
 ## Installation
 
-```
+```js
 npm install opc
 ```
