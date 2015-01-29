@@ -25,6 +25,7 @@
   "devDependencies": {
     "buffer-equal": "0.0.1",
     "concat-stream": "^1.4.7"
+    "tape": "^3.4.0"
   },
   "dependencies": {
     "duplexer2": "0.0.2",
