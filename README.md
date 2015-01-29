@@ -104,6 +104,32 @@ buffer will be `strand.length * 3` bytes.
 
 The number of pixels in the strand.
 
+## Parser
+
+```
+var createParser = require("opc/parser");
+
+require("net").createServer(function(connection) {
+  connection.pipe(createParser()).on("data", function(message) {
+    console.log("Message");
+    console.log("  Channel:", message.channel);
+    console.log("  Command:", message.command);
+    console.log("  Data length:", message.data.length);
+  });
+});
+
+```
+
+### `var parser = createParser()`
+
+Create a transform stream that parses binary data written to it an
+emits Open Pixel Control messages. Message objects have the following
+properties:
+
+ * `channel`: The channel id
+ * `command`: The command id
+ * `data`: A buffer containing the message data
+
 ## Installation
 
 ```

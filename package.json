@@ -25,5 +25,10 @@
   "devDependencies": {
     "buffer-equal": "0.0.1",
     "concat-stream": "^1.4.7"
+  },
+  "dependencies": {
+    "duplexer2": "0.0.2",
+    "parse-binary-stream": "^1.0.0",
+    "through2": "^0.6.3"
   }
 }

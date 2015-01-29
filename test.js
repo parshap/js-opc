@@ -40,3 +40,36 @@ stream.pipe(concat(function(data) {
 }));
 
 // @TODO Test stream.writeColorCorrection
+
+// Parser
+var parserAsserters = [
+  function(message) {
+    assert.equal(message.channel, 0);
+    assert.equal(message.command, 0);
+    assert(bufferEqual(message.data, strand.buffer));
+  },
+  function(message) {
+    assert.equal(message.channel, 1);
+    assert.equal(message.command, 0);
+    assert(bufferEqual(message.data, strand.buffer));
+  },
+];
+var createParser = require("./parser");
+var parserIndex = 0;
+var parser = createParser().on("data", function(message) {
+  parserAsserters[parserIndex](message);
+  parserIndex += 1;
+});
+var stream2 = createStream();
+var stream2ended = false;
+stream2.pipe(parser);
+stream2.writePixels(0, strand.buffer);
+stream2.writePixels(1, strand.buffer);
+stream2.end();
+parser.on("end", function() {
+  stream2ended = true;
+  assert.equal(parserIndex, 2);
+});
+process.on("exit", function() {
+  assert(stream2ended);
+});

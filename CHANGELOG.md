@@ -4,6 +4,7 @@
 
  * Add `stream.writeMessage`
  * Add `strand.getPixel`
+ * Add parser
 
 ## 1.0.0
 
