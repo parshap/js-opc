@@ -16,6 +16,15 @@ module.exports = function(length, buffer) {
     this.buffer.writeUInt8(b, offset + 2);
   }
 
+  function getPixel(index) {
+    var offset = index * 3;
+    return [
+      this.buffer.readUInt8(offset),
+      this.buffer.readUInt8(offset + 1),
+      this.buffer.readUInt8(offset + 2),
+    ];
+  }
+
   function slice(start, end) {
     return module.exports(end - start, this.buffer.slice(start * 3, end * 3));
   }
@@ -35,6 +44,10 @@ module.exports = function(length, buffer) {
     },
     setPixel: {
       value: setPixel,
+      enumerable: true,
+    },
+    getPixel: {
+      value: getPixel,
       enumerable: true,
     },
     slice: {

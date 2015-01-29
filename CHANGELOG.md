@@ -3,6 +3,7 @@
 ## Next Release
 
  * Add `stream.writeMessage`
+ * Add `strand.getPixel`
 
 ## 1.0.0
 
