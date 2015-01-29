@@ -61,6 +61,13 @@ message with the given *config* object.
 
 [fc color]: https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_opc.md#set-global-color-correction
 
+### `stream.writeMessage(channel, command, data)`
+
+Emits a generic [Open Pixel Control message][opc message]. *Data* should
+be a buffer.
+
+[opc message]: https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_opc.md#command-format
+
 ## Strand
 
 ```

@@ -14,40 +14,42 @@ function OPCStream() {
 
 util.inherits(OPCStream, PassThrough);
 
+OPCStream.prototype.writeMessage = function(channel, command, data) {
+  return this.write(createMessage(channel, command, data));
+};
+
 OPCStream.prototype.writePixels = function(channel, pixels) {
-  return this.write(createPixelsPacket(channel, pixels));
+  return this.write(createPixelsMessage(channel, pixels));
 };
 
 OPCStream.prototype.writeColorCorrection = function(config) {
-  return this.write(createSetGlobalColorCorrectionPacket(config));
+  return this.write(createSetGlobalColorCorrectionMessage(config));
 };
 
-function createPixelsPacket(channel, pixels) {
-  var control = createPixelsControlPacket(channel, pixels);
-  return Buffer.concat([control, pixels]);
+function createPixelsMessage(channel, pixels) {
+  return createMessage(channel, 0, pixels);
 }
 
-function createPixelsControlPacket(channel, pixels) {
+function createSetGlobalColorCorrectionMessage(config) {
+  var json = JSON.stringify(config);
+  var data = new Buffer(Buffer.byteLength(json) + 4);
+  data.writeUInt16BE(0x0001, 0); // System ID ("Fadecandy")
+  data.writeUInt16BE(0x0001, 2); // SysEx ID ("Set Global Color Correction")
+  data.write(json, 4); // data
+  return createMessage(0, 0xff, data);
+}
+
+function createMessage(channel, command, data) {
+  var control = createControl(channel, command, data.length);
+  return Buffer.concat([control, data]);
+}
+
+function createControl(channel, command, length) {
   var CONTROL_LENGTH = 4;
   var buffer = new Buffer(CONTROL_LENGTH);
-  buffer.writeUInt8(0, 0); // Channel
-  buffer.writeUInt8(0, 1); // Command
-  buffer.writeUInt16BE(pixels.length, 2); // Data length
-  return buffer;
-}
-
-function createSetGlobalColorCorrectionPacket(config) {
-  var CONTROL_LENGTH = 8;
-  var json = JSON.stringify(config);
-  var dataLength = json.length;
-  var bufferLength = CONTROL_LENGTH + dataLength;
-  var buffer = new Buffer(bufferLength);
-  buffer.writeUInt8(0, 0); // Channel
-  buffer.writeUInt8(0xff, 1); // Command
-  buffer.writeUInt16BE(dataLength, 2); // Data length
-  buffer.writeUInt16BE(0x0001, 4); // System ID ("Fadecandy")
-  buffer.writeUInt16BE(0x0001, 6); // SysEx ID ("Set Global Color Correction")
-  buffer.write(json, 8); // data
+  buffer.writeUInt8(channel, 0); // Channel
+  buffer.writeUInt8(command, 1); // Command
+  buffer.writeUInt16BE(length, 2); // Data length
   return buffer;
 }
 
