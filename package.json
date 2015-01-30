@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "duplexer2": "0.0.2",
+    "is-integer": "^1.0.3",
     "parse-binary-stream": "^1.0.0",
     "through2": "^0.6.3"
   }

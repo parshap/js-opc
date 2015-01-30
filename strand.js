@@ -8,7 +8,24 @@
 // [1] http://openpixelcontrol.org/
 //
 
-module.exports = function(length, buffer) {
+var isInteger = require("is-integer");
+
+function getBuffer(input) {
+  if (Buffer.isBuffer(input)) {
+    if (input.length % 3 !== 0) {
+      throw new Error("Buffer length must be a multiple of 3");
+    }
+    return input;
+  }
+  else if (isInteger(input)) {
+    return new Buffer(input * 3);
+  }
+  else {
+    throw new Error("Input must be a buffer or an integer length");
+  }
+}
+
+module.exports = function(lengthOrBuffer) {
   function setPixel(index, r, g, b) {
     var offset = index * 3;
     this.buffer.writeUInt8(r, offset);
@@ -26,20 +43,22 @@ module.exports = function(length, buffer) {
   }
 
   function slice(start, end) {
-    return module.exports(end - start, this.buffer.slice(start * 3, end * 3));
+    return module.exports(this.buffer.slice(start * 3, end * 3));
   }
 
-  if (length === undefined) {
-    throw new Error("Strand length must be given");
-  }
+  // Get a buffer to use for the pixel data. The input can be either the
+  // length of the strand or an existing buffer to use.
+  var buffer = getBuffer(lengthOrBuffer);
 
+  // Create an object where the properties are not configurable or
+  // writable - e.g., strand.length cannot be assigned a new value.
   return Object.create(null, {
     buffer: {
-      value: buffer || new Buffer(length * 3),
+      value: buffer,
       enumerable: true,
     },
     length: {
-      value: length,
+      value: buffer.length / 3,
       enumerable: true,
     },
     setPixel: {
@@ -51,7 +70,8 @@ module.exports = function(length, buffer) {
       enumerable: true,
     },
     slice: {
-      value: slice
+      value: slice,
+      enumerable: true,
     },
   });
 };
