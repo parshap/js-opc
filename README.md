@@ -90,6 +90,11 @@ command).
 
 Set color at *index* to the given *rgb* value.
 
+### `strand.getPixel(index)`
+
+Return an array representing the *rgb* color value at *index* (e.g.,
+`[255, 0, 105]`).
+
 ### `strand.slice(start, end)`
 
 Returns a new strand which references the same state as the old, but
