@@ -4,7 +4,7 @@
 
  * Refactor strand object, remove second argument
 
-## Next Release
+## 1.1.0
 
  * Add `stream.writeMessage`
  * Add `strand.getPixel`
