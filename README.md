@@ -115,6 +115,7 @@ The number of pixels in the strand.
 
 ```js
 var createParser = require("opc/parser");
+var createStrand = require("opc/strand");
 
 require("net").createServer(function(connection) {
   connection.pipe(createParser()).on("data", function(message) {
@@ -122,6 +123,14 @@ require("net").createServer(function(connection) {
     console.log("  Channel:", message.channel);
     console.log("  Command:", message.command);
     console.log("  Data length:", message.data.length);
+
+    // Read pixel colors
+    if (message.command === 0) {
+      var strand = createStrand(message.data);
+      for (var i = 0; strand.length < i; i++) {
+        console.log("  Pixel", i, strand.getPixel(i));
+      }
+    }
   });
 });
 
