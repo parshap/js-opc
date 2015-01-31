@@ -1,6 +1,6 @@
 # Release Notes
 
-## Next Release
+## 1.1.1
 
  * Refactor strand object, remove second argument
 
