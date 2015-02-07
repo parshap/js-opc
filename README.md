@@ -4,6 +4,11 @@
 
 Control lights using the [Open Pixel Control][opc] protocol.
 
+## Module Scope
+
+This module handles binary encoding and decoding of the *Open Pixel
+Control* protocol and provides a virtual address space for pixels.
+
 This module was created to control [Fadecandy][] devices, but it should
 work as a generic tool to create Open Pixel Control messages.
 
@@ -11,6 +16,16 @@ work as a generic tool to create Open Pixel Control messages.
 [opc]: http://openpixelcontrol.org/
 
 ## Usage
+
+This module provides three components:
+
+ * *Encoder*: Write binary messages
+ * *Decoder*: Parse binary messages
+ * *Strand*: Model of a strand of pixels and virtual address space
+
+[stream]: http://nodejs.org/api/stream.html
+
+### Example
 
 ```js
 // Create TCP connection to Open Pixel Control server
