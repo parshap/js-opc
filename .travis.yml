@@ -1,10 +1,17 @@
 language: node_js
 node_js:
 - '0.10'
-- '0.11'
+- '0.12'
+- 'iojs'
 before_install:
 - npm install -g npm
-script: "npm test && npm run test-browser-sauce"
+script: |
+  if [[ $TRAVIS_JOB_NUMBER = *.1 ]]
+  then
+    npm test && npm run test-browser-sauce
+  else
+    npm test
+  fi
 env:
   global:
   # Sauce Labs
