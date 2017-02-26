@@ -18,7 +18,7 @@ function getBuffer(input) {
     return input;
   }
   else if (isInteger(input)) {
-    return new Buffer(input * 3);
+    return Buffer.alloc(input * 3);
   }
   else {
     throw new Error("Input must be a buffer or an integer length");

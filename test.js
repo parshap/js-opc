@@ -23,7 +23,7 @@ test("opc", function(t) {
   var createStream = require("./index");
   var stream = createStream();
   stream.writePixels(0, strand.buffer);
-  stream.writeMessage(5, 10, new Buffer([0x0, 0x1, 0x2]));
+  stream.writeMessage(5, 10, Buffer.from([0x0, 0x1, 0x2]));
   stream.end();
   stream.pipe(concat(function(data) {
     // .writePixels(0, strand.buffer);
@@ -32,12 +32,12 @@ test("opc", function(t) {
     t.equal(data.readUInt16BE(2), strand.buffer.length);
     t.ok(bufferEqual(data.slice(4, 4 + strand.buffer.length), strand.buffer));
 
-    // .writeMessage(5, 10, new Buffer([0x0, 0x1, 0x2]));
+    // .writeMessage(5, 10, Buffer.from([0x0, 0x1, 0x2]));
     var offset = strand.buffer.length + 4;
     t.equal(data.readUInt8(offset + 0), 5);
     t.equal(data.readUInt8(offset + 1), 10);
     t.equal(data.readUInt16BE(offset + 2), 3);
-    t.ok(bufferEqual(data.slice(offset + 4), new Buffer([0x0, 0x1, 0x2])));
+    t.ok(bufferEqual(data.slice(offset + 4), Buffer.from([0x0, 0x1, 0x2])));
   }));
 
   // @TODO Test stream.writeColorCorrection
